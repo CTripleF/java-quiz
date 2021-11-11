@@ -1,6 +1,8 @@
-var timerEl=document.getElementById('countdown');
+var timerEl = document.getElementById('countdown');
+var scoreEl = document.getElementById('score')
+var questionEl = document.getElementById("question")
+var answers = Array.from(document.querySelectorAll("answer-btn"))
 var highScores=[];
-var score = 0;
 
 function countdown() {
   var timeLeft = 60;
@@ -51,4 +53,4 @@ function endQuiz(){
 //   }
 // }
 
-//countdown();
+countdown();
