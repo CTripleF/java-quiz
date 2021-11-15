@@ -12,6 +12,8 @@ This application should should run a timed multiple choice quiz when the start b
 https://ctriplef.github.io/java-quiz/
 
 ## Screenshot
+![java-quiz-screenshot](https://user-images.githubusercontent.com/91702886/141722915-76159ef8-dced-4054-af00-f179b1dd3139.PNG)
+
 
 ## Contributors
 Chris Fabra
