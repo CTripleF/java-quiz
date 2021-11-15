@@ -74,7 +74,9 @@ main {
   text-align: center;
   color: var(--primary);
   background-color: var(--secondary);
+  display: none;
 }
+
 
 .answer-btn {
   margin-bottom: 1%;
@@ -87,10 +89,10 @@ main {
   padding: 1%
 }
 
-.correct{
+.revealCorrect{
   background-color: var(--correct);
 }
 
-.incorrect{
+.revealIncorrect{
   background-color: var(--incorrect);
 }
