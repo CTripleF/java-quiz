@@ -16,12 +16,6 @@
 </header>
 <body>
   <main id='quiz'>
-    <div id="user-form">
-        <form action="">
-          <input type="text" placeholder="Enter name" />
-          <button class="btn begin-btn">Begin</button>
-        </form>
-      </div>
 
     <div class="question-card">
       <h2 id="question">the first question will go here. Adding aditional text to test functionality for science and such.</h2>
@@ -58,10 +52,10 @@
     <div class="question-card">
       <h2 id="question">the first question will go here. Adding aditional text to test functionality for science and such.</h2>
       <div class="answer-container">
-        <button class="btn answer-btn ">this will be answer 1</button>
+        <button class="btn answer-btn">this will be answer 1</button>
       </div>
       <div class="answer-container">
-        <button class="btn answer-btn ">this will be answer 2</button>
+        <button class="btn answer-btn">this will be answer 2</button>
       </div>
       <div class="answer-container">
         <button class="btn answer-btn correct">this will be answer 3</button>
@@ -71,10 +65,19 @@
       </div>
     </div>
 
+    <div id="user-form">
+      <form action="">
+        <input type="text" placeholder="Enter name" />
+        <button class="btn" id="play-btn" >Play Again</button>
+        <button class="btn" id="save-btn" >Save Score</button>
+        <button class="btn" id="end-btn" onClick="location.href='./end.html'">View Highscores</button>
+      </form>
+
+    </div>
+
+
     
-
-
-    <script src="./assets/js/script.js"></script>
   </main>
+  <script src="./assets/js/script.js"></script>
 </body>
 </html>

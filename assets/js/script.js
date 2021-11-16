@@ -1,7 +1,7 @@
 var timerEl = document.getElementById('countdown');
-var scoreEl = document.getElementById('score')
-//var formEl = document.getElementsById("user-form")
-var questionsArr= document.getElementsByClassName('question-card');
+var scoreEl = document.getElementById('score');
+var questionsCol= document.getElementsByClassName('question-card');
+var formEl = document.getElementById('user-form')
 var highScores=[];
 let currentScore = 0;
 let questionNum = 0;
@@ -10,11 +10,6 @@ const AWARD_POINTS = 100;
 
 
 var timeLeft = 60;
-if (timeLeft === 0){
-  for(i=0; i < questionsArr; i++){
-    questionsArr[i].style.display = "none";
-  }
-};
 
 function countdown() {
   // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
@@ -26,6 +21,7 @@ function countdown() {
     {
       clearInterval(timeInterval);
       timerEl.textContent = "00:00";
+      endQuiz();
     }
   }, 
   1000);
@@ -34,101 +30,73 @@ function countdown() {
 
 
 function startQuiz(){
-
-  questionsArr[0].style.display = "block";
+  countdown();
+  questionsCol[0].style.display = "block";
 
   if (document.body.addEventListener){
-    //listen for click but only allow for one event. prevents answer change or scoring multiple times with single answer
-    document.body.addEventListener('click',eventHandler,{once:true});
+    //listen for click event
+    document.body.addEventListener('click',eventHandler);
   }
-  
+  //match click event to one of the answer buttons
   function eventHandler(e){
     e = e || window.event;
     var target = e.target || e.srcElement;
     if (target.className.match(/answer-btn/))
     {
       //an element with the answer-btn Class was clicked
+      setTimeout(hideShow, 1500);
+      // disable buttons after a choice is made to prevent changing or repeating answers
+      var answersArr =questionsCol[questionNum].getElementsByClassName("answer-btn")
+      disableBtn(answersArr)
       checkAnswer(target);
+      questionNum++; // iterate to new question
+
+      // call endQuiz if all questions have been answered
+      if (questionNum == questionsCol.length){
+        setTimeout(endQuiz, 1500);
+      }
     }
   }
-
-  // use an interval to display questions
-var QuestionInterval = setInterval(hideShow, 3000);
-
-function hideShow(){
-
-  if (document.body.addEventListener){
-    document.body.addEventListener('click',eventHandler,{once:true});
-  }
-  
-  function eventHandler(e){
-    e = e || window.event;
-    var target = e.target || e.srcElement;
-    if (target.className.match(/answer-btn/))
-    {
-      //an element with the answer-btn Class was clicked
-      checkAnswer(target);
-    }
-  }
-
-
-  //esure there is time remaining
-  if (timeLeft === 0){
-    questionsArr[questionNum].style.display = "none";
-    clearInterval(QuestionInterval);
-    //endQuiz();
-  }
-  //ensure only current question is displayed
-  if (questionNum >= 1 && questionNum <= 3){
-    questionsArr[questionNum-1].style.display = "none";
-  }
-  if (questionNum < 3){
-    questionsArr[questionNum].style.display = "block";
-  }
-  //clear current interval when all questions have been answered
-  else {
-    clearInterval(QuestionInterval);
-    timeLeft = 0;
-    //endQuiz();
-  }
-
 };
-};
+
 
 
 //check the selection for a correct answer, change background color, and update score/timer
 function checkAnswer(button) {
-  console.log(button)
   if(button.className.match(/correct/)){
-    console.log('correct');
     currentScore+= AWARD_POINTS;
     scoreEl.textContent = 'Score: ' + currentScore;
     button.classList.add('revealCorrect');
-    questionNum++;
   }
   else{
-    console.log('incorrect');
     button.classList.add('revealIncorrect');
-    questionNum++;
     timeLeft -=5;
   }
-  console.log(currentScore)
-}
+};
 
-
-if (document.body.addEventListener){
-  
-  document.body.addEventListener('click',eventHandler,{once:true});
-}
-
-function eventHandler(e){
-  e = e || window.event;
-  var target = e.target || e.srcElement;
-  if (target.className.match(/begin-btn/))
-  {
-    e.preventDefault();
-    countdown();
-    startQuiz();
+// iterate through buttons within question card and disable them
+function disableBtn(answers){
+  for (i=0; i < answers.length; i++){
+    answers[i].setAttribute("disabled","true");
   }
-}
+};
+
+//display current question and hide previous
+function hideShow() {
+  let prevQuestion = questionNum - 1;
+  questionsCol[prevQuestion].style.display = "none";
+  questionsCol[questionNum].style.display = "block";
+};
+
+// reduce time to 0, clear questions from display and show uswer form
+function endQuiz(){
+  timeLeft = 0;
+  for(i=0; i < questionsCol.length; i++){
+    questionsCol[i].style.display = "none";
+  }
+  formEl.style.display = "flex";
+};
+
+    startQuiz();
+
 
